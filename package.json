@@ -12,17 +12,10 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@react-native-community/geolocation": "^2.0.2",
-    "@react-native-community/masked-view": "^0.1.10",
-    "@react-navigation/native": "^5.8.9",
-    "@react-navigation/stack": "^5.12.8",
     "@storybook/cli": "^6.1.1",
     "react": "16.13.1",
     "react-native": "0.63.3",
-    "react-native-gesture-handler": "^1.8.0",
-    "react-native-reanimated": "^1.13.2",
-    "react-native-safe-area-context": "^3.1.9",
-    "react-native-screens": "^2.15.0",
+    "react-native-navigation": "^7.4.0",
     "swr": "^0.3.9",
     "trocha": "^0.2.3"
   },
