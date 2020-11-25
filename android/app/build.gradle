@@ -132,6 +132,12 @@ android {
         applicationId "com.pokelist"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+
+        /* DFOXPRO CHANGE
+         * https://github.com/wix/react-native-navigation/issues/6623
+         */
+        multiDexEnabled true
+
         versionCode 1
         versionName "1.0"
     }
