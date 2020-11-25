@@ -5,7 +5,7 @@ import PokemonList from '../screens/PokemonListScreen'
 const NAME = 'Da Poquémon list'
 
 const SCREEN = function ({ navigation }) {
-	return <PokemonList />
+  return <PokemonList />
 }
 
 // const STYLE = StyleSheet.create({
