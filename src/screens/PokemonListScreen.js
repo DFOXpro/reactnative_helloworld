@@ -9,12 +9,18 @@ import {
   TouchableWithoutFeedback,
   ActivityIndicator,
 } from 'react-native'
+import { handleGotoScreen } from '../routes'
 import Search from '../components/Search'
 import { useFetchPokemonList } from '../hooks/PokemonListScreenHooks'
+import { CODE_NAME as PokemonInfoScreenCodeName } from './PokemonInfoScreen'
 
-const handleGoToPokemonScreen = function (url) {
+const handleGoToPokemonScreen = function (url, props) {
   return () => {
-    console.log('go to', url)
+    handleGotoScreen(
+      PokemonInfoScreenCodeName,
+      props,
+      { url },
+    )
   }
 }
 const handleSearch = function (pokemonList) {
@@ -23,7 +29,7 @@ const handleSearch = function (pokemonList) {
   }
 }
 
-const rawList = function (data) {
+const rawList = function (data, props) {
   if (!data) {
     return
   }
@@ -33,7 +39,10 @@ const rawList = function (data) {
       return
     }
     return requestResponse.results.map((pokemon, index) => (
-      <TouchableWithoutFeedback key={index} onPress={handleGoToPokemonScreen(pokemon.url)}>
+      <TouchableWithoutFeedback
+        key={index}
+        onPress={handleGoToPokemonScreen(pokemon.url, props)}
+      >
         <View
           style={[
             STYLE.card,
@@ -60,7 +69,7 @@ const rawList = function (data) {
 }
 
 let loading = true
-const PokemonList = function ({ navigation }) {
+const PokemonList = function (props) {
   let currentPage = 0
 
   const { data, error, mutate, size, setSize, isValidating } = useFetchPokemonList(() => (loading = false))
@@ -77,7 +86,7 @@ const PokemonList = function ({ navigation }) {
   ) : (
     <ScrollView>
       <Search placeholder="Pokémon name" onChange={handleSearch(data)} />
-      <View style={[STYLE.container]}>{rawList(data)}</View>
+      <View style={[STYLE.container]}>{rawList(data, props)}</View>
       <Button onPress={() => setSize(size + 1)} title="load more" />
     </ScrollView>
   )

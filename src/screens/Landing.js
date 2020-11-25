@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { /*StyleSheet, */ View, Text, ActivityIndicator } from 'react-native'
+// import { /*StyleSheet, */ View, Text, ActivityIndicator } from 'react-native'
 import PokemonList from '../screens/PokemonListScreen'
 
-const NAME = 'Da Poquémon list'
+const TITLE = 'Poquémones'
+const CODE_NAME = 'Landing'
 
-const SCREEN = function ({ navigation }) {
-  return <PokemonList />
+const SCREEN = function (props) {
+  return <PokemonList {...props}/>
+}
+
+SCREEN.options = {
+  topBar: {
+    title: {
+      text: TITLE,
+    },
+  },
+  bottomTab: {
+    text: TITLE,
+  },
 }
 
 // const STYLE = StyleSheet.create({
 // })
 
-export { SCREEN, NAME }
+export { SCREEN, CODE_NAME }
