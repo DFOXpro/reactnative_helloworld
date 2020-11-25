@@ -1,18 +1,8 @@
 import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-import * as Landing from './src/screens/Landing'
-
-const Stack = createStackNavigator()
+import { initRoutesEngine } from './src/routes'
 
 const App = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name={Landing.NAME} component={Landing.SCREEN} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  )
+  initRoutesEngine()
 }
 
 export default App
