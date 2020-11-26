@@ -34,13 +34,9 @@ const initRoutesEngine = function () {
   //     name: getScreenCodeName(PokemonInfoScreen.CODE_NAME),
   //   },
   // }
-  let screens = [
-    Landing,
-    PokemonInfo
-  ].forEach((item) => Navigation.registerComponent(
-    getScreenCodeName(item.CODE_NAME),
-    () => item.SCREEN
-  ))
+  let screens = [Landing, PokemonInfo].forEach(item =>
+    Navigation.registerComponent(getScreenCodeName(item.CODE_NAME), () => item.SCREEN)
+  )
   Navigation.events().registerAppLaunchedListener(() => {
     Navigation.setRoot({
       root: {
@@ -53,7 +49,7 @@ const initRoutesEngine = function () {
                     component: {
                       name: rootScreenName,
                     },
-                  }
+                  },
                 ],
               },
             },
@@ -65,11 +61,13 @@ const initRoutesEngine = function () {
 
   Navigation.setDefaultOptions({
     statusBar: {
-      backgroundColor: '#4d089a',
+      backgroundColor: CONSTANTS.COLOUR_A,
+      style: 'dark',
     },
     topBar: {
       title: {
         color: CONSTANTS.COLOUR_FOREGROUND,
+        fontWeight: 'bold',
       },
       backButton: {
         color: CONSTANTS.COLOUR_FOREGROUND,
