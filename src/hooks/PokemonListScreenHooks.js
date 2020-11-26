@@ -1,6 +1,6 @@
 import { useSWRInfinite } from 'swr'
 
-const LIST_SIZE = 25
+const LIST_SIZE = 30
 
 const useFetchPokemonList = function (uiStateChange) {
   const fetcher = (...args) =>
