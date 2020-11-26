@@ -5,6 +5,7 @@ import { Navigation } from 'react-native-navigation'
 import * as CONSTANTS from './constants'
 import * as Landing from './screens/Landing'
 import * as PokemonInfo from './screens/PokemonInfoScreen'
+import * as Versions from './screens/VersionsScreen'
 
 const API_ROUTES = new Trocha({
   domain: CONSTANTS.API_DOMAIN,
@@ -34,7 +35,7 @@ const initRoutesEngine = function () {
   //     name: getScreenCodeName(PokemonInfoScreen.CODE_NAME),
   //   },
   // }
-  let screens = [Landing, PokemonInfo].forEach(item =>
+  let screens = [Landing, PokemonInfo, Versions].forEach(item =>
     Navigation.registerComponent(getScreenCodeName(item.CODE_NAME), () => item.SCREEN)
   )
   Navigation.events().registerAppLaunchedListener(() => {
@@ -47,10 +48,31 @@ const initRoutesEngine = function () {
                 children: [
                   {
                     component: {
-                      name: rootScreenName,
+                      name: getScreenCodeName(Landing.CODE_NAME),
                     },
                   },
                 ],
+                options: {
+                  bottomTab: {
+                    icon: require('./assets/digimon.png'),
+                  },
+                },
+              },
+            },
+            {
+              stack: {
+                children: [
+                  {
+                    component: {
+                      name: getScreenCodeName(Versions.CODE_NAME),
+                    },
+                  },
+                ],
+                options: {
+                  bottomTab: {
+                    icon: require('./assets/digimonDevice.png'),
+                  },
+                },
               },
             },
           ],
