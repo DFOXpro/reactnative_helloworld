@@ -14,13 +14,12 @@ import Search from '../components/Search'
 import { useFetchPokemonList } from '../hooks/PokemonListScreenHooks'
 import { CODE_NAME as PokemonInfoScreenCodeName } from './PokemonInfoScreen'
 
-const handleGoToPokemonScreen = function (url, props) {
+const handleGoToPokemonScreen = function (pokemon, props) {
   return () => {
-    handleGotoScreen(
-      PokemonInfoScreenCodeName,
-      props,
-      { url },
-    )
+    handleGotoScreen(PokemonInfoScreenCodeName, props, {
+      url: pokemon.url,
+      name: pokemon.name,
+    })
   }
 }
 const handleSearch = function (pokemonList) {
@@ -39,10 +38,7 @@ const rawList = function (data, props) {
       return
     }
     return requestResponse.results.map((pokemon, index) => (
-      <TouchableWithoutFeedback
-        key={index}
-        onPress={handleGoToPokemonScreen(pokemon.url, props)}
-      >
+      <TouchableWithoutFeedback key={index} onPress={handleGoToPokemonScreen(pokemon, props)}>
         <View
           style={[
             STYLE.card,
