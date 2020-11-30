@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 // import { /*StyleSheet, */ View, Text, ActivityIndicator } from 'react-native'
 import PokemonList from '../screens/PokemonListScreen'
+import { _i18n } from '../locales'
 
-const TITLE = 'Poquémones'
+const localeKeyId = 'pokemonList_'
+const TITLE = _i18n(localeKeyId + 'title')
 const CODE_NAME = 'Landing'
 
 const SCREEN = function (props) {
-  return <PokemonList {...props}/>
+  return <PokemonList {...props} />
 }
 
 SCREEN.options = {

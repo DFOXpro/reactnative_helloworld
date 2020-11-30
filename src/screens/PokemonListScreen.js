@@ -1,28 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import {
-  StyleSheet,
-  View,
-  Text,
-  Button,
-  Image,
-  ScrollView,
-  TouchableWithoutFeedback,
-  ActivityIndicator,
-} from 'react-native'
-import { handleGotoScreen } from '../routes'
+import { StyleSheet, View, Text, Button, ScrollView } from 'react-native'
+import { handleGotoScreen } from '../routes/utils'
 import Search from '../components/Search'
+import PokemonCard from '../components/PokemonCard'
+import LoadingOrError from '../components/LoadingOrError'
 import { useFetchPokemonList } from '../hooks/PokemonListScreenHooks'
-import { CODE_NAME as PokemonInfoScreenCodeName } from './PokemonInfoScreen'
+import { _i18n } from '../locales'
 
-const handleGoToPokemonScreen = function (pokemon, props) {
-  return () => {
-    handleGotoScreen(PokemonInfoScreenCodeName, props, {
-      url: pokemon.url,
-      name: pokemon.name,
-    })
-  }
-}
-const handleSearch = function (pokemonList) {
+const localeKeyId = 'pokemonList_'
+
+let pokemonList = []
+
+const handleSearch = function () {
   return searchValue => {
     console.log('search', searchValue)
   }
@@ -32,59 +21,33 @@ const rawList = function (data, props) {
   if (!data) {
     return
   }
-  console.log('data.length', data.length)
+  // console.log('data.length', data.length, data)
   let nonFlatArray = data.map(requestResponse => {
     if (!requestResponse) {
       return
     }
     return requestResponse.results.map((pokemon, index) => (
-      <TouchableWithoutFeedback key={index} onPress={handleGoToPokemonScreen(pokemon, props)}>
-        <View
-          style={[
-            STYLE.card,
-            STYLE[
-              index % 4 === 0 || index % 4 === 3 ? 'cardBig' : 'cardSmall'
-            ] /*, STYLE[index%4===0?'cardRight':'cardLeft']*/,
-          ]}
-        >
-          <Image
-            style={[STYLE.image]}
-            source={{
-              uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.slice(
-                -3,
-                -1
-              )}.png`,
-            }}
-          />
-          <Text>{pokemon.name}</Text>
-        </View>
-      </TouchableWithoutFeedback>
+      <PokemonCard key={index} index={index} pokemon={pokemon} parenProps={props} />
     ))
   })
   return nonFlatArray.flat()
 }
+const handleOnError = function () {}
 
-let loading = true
 const PokemonList = function (props) {
   let currentPage = 0
 
-  const { data, error, mutate, size, setSize, isValidating } = useFetchPokemonList(() => (loading = false))
-  // console.log(
-  // 	'swr',
-  // 	data,
-  // 	error
-  // )
+  const { data, error, mutate, size, setSize, isValidating } = useFetchPokemonList()
+  // console.log('swr', data, error)
 
-  return loading ? (
-    <View style={[STYLE.container]}>
-      <ActivityIndicator size="large" />
-    </View>
-  ) : (
-    <ScrollView>
-      <Search placeholder="Pokémon name" onChange={handleSearch(data)} />
-      <View style={[STYLE.container]}>{rawList(data, props)}</View>
-      <Button onPress={() => setSize(size + 1)} title="load more" />
-    </ScrollView>
+  return (
+    <LoadingOrError isValidating={isValidating} error={error} handleOnError={handleOnError}>
+      <ScrollView>
+        <Search placeholder="Pokémon name" onChange={handleSearch(data)} />
+        <View style={[STYLE.container]}>{rawList(data, props)}</View>
+        <Button onPress={() => setSize(size + 1)} title={_i18n('pokemonList_loadMore')} />
+      </ScrollView>
+    </LoadingOrError>
   )
 }
 
@@ -98,31 +61,6 @@ const STYLE = StyleSheet.create({
     flexWrap: 'wrap',
     flexGrow: 0,
     flexShrink: 0,
-  },
-  card: {
-    flex: 1,
-    height: 100,
-    padding: 10,
-    position: 'relative',
-    backgroundColor: 'aquamarine',
-    flexGrow: 0,
-    flexShrink: 0,
-  },
-  cardBig: {
-    minWidth: '60%',
-    backgroundColor: 'beige',
-  },
-  cardSmall: {
-    minWidth: '40%',
-  },
-  cardLeft: {},
-  cardRight: {},
-  image: {
-    width: 100,
-    height: 100,
-    position: 'absolute',
-    right: 0,
-    top: 0,
   },
 })
 
