@@ -1,11 +1,10 @@
 import { Navigation } from 'react-native-navigation'
 import { BASE_ROUTE, API_ROUTES } from './constants'
+import { getScreenCodeName } from './utils'
 import * as CONSTANTS from '../constants'
 import * as Landing from '../screens/Landing'
 import * as PokemonInfo from '../screens/PokemonInfoScreen'
 import * as Versions from '../screens/VersionsScreen'
-
-const getScreenCodeName = codeName => BASE_ROUTE + codeName
 
 const initRoutesEngine = function () {
   const rootScreenName = getScreenCodeName(Landing.CODE_NAME)
