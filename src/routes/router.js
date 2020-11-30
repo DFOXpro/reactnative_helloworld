@@ -1,32 +1,11 @@
-import { Trocha } from 'trocha'
-
-import { name as appName } from '../app.json'
 import { Navigation } from 'react-native-navigation'
-import * as CONSTANTS from './constants'
-import * as Landing from './screens/Landing'
-import * as PokemonInfo from './screens/PokemonInfoScreen'
-import * as Versions from './screens/VersionsScreen'
+import { BASE_ROUTE, API_ROUTES } from './constants'
+import * as CONSTANTS from '../constants'
+import * as Landing from '../screens/Landing'
+import * as PokemonInfo from '../screens/PokemonInfoScreen'
+import * as Versions from '../screens/VersionsScreen'
 
-const API_ROUTES = new Trocha({
-  domain: CONSTANTS.API_DOMAIN,
-  alwaysUrl: true,
-  routes: {
-    pokemonList: 'pokemon', // ?offset=20&limit=20
-    regionList: 'region',
-    typeList: 'type',
-  },
-})
-
-const _BASE_ROUTE = `com.${appName}.`
-const getScreenCodeName = codeName => _BASE_ROUTE + codeName
-
-const handleGotoScreen = (codeName, props, passProps) =>
-  Navigation.push(props.componentId, {
-    component: {
-      name: getScreenCodeName(codeName),
-      passProps,
-    },
-  })
+const getScreenCodeName = codeName => BASE_ROUTE + codeName
 
 const initRoutesEngine = function () {
   const rootScreenName = getScreenCodeName(Landing.CODE_NAME)
@@ -54,7 +33,7 @@ const initRoutesEngine = function () {
                 ],
                 options: {
                   bottomTab: {
-                    icon: require('./assets/digimon.png'),
+                    icon: require('../assets/digimon.png'),
                   },
                 },
               },
@@ -70,7 +49,7 @@ const initRoutesEngine = function () {
                 ],
                 options: {
                   bottomTab: {
-                    icon: require('./assets/digimonDevice.png'),
+                    icon: require('../assets/digimonDevice.png'),
                   },
                 },
               },
@@ -105,4 +84,4 @@ const initRoutesEngine = function () {
   })
 }
 
-export { API_ROUTES, initRoutesEngine, handleGotoScreen }
+export { initRoutesEngine }
